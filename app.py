@@ -15,6 +15,11 @@ class Proxy:
     def health(self):
         return "OK"
 
+    # Let's not spam google if we don't get a query, and return a Bad Request.
+    @myproxy.route('/', methods=['GET'])
+    def empty(self):
+        return "Empty search string", 400
+
     # This is a very dumb proxy, we're only doing GET.
     @myproxy.route('/<path:req>', methods=['GET'])
     def proxy(req):
