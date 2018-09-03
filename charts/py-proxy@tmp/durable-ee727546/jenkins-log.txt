@@ -1,0 +1,5 @@
++ make tag
+sed -i -e "s/version:.*/version: 0.0.4/" Chart.yaml
+sed -i -e "s|repository: .*|repository: 332635812024.dkr.ecr.us-west-2.amazonaws.com\/chrissvec\/py-proxy|" values.yaml
+sed -i -e "s/tag: .*/tag: 0.0.4/" values.yaml
+git add --all
