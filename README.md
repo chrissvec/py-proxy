@@ -1,3 +1,3 @@
-# python-http
+# py-proxy
 
-Simple Hello World Python HTTP server
+An incredibly short python proxy using flask.

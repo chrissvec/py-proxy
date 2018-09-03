@@ -1,24 +1,28 @@
 #!/usr/bin/python
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
+# Flask is used to create a somewhat lightweight listening server
+from flask import Flask
+from requests import get
 
-PORT_NUMBER = 8080
 
-class MyHandler(BaseHTTPRequestHandler):
+myproxy = Flask('__name__')
 
-  def do_GET(self):
-    """Handler for GET requests"""
-    self.send_response(200)
-    self.send_header('Content-type','image/png')
-    self.end_headers()
-    with open('logo.png', 'rb') as f:
-      self.wfile.write(f.read())
 
-try:
-  server = HTTPServer(('', PORT_NUMBER), MyHandler)
-  print('Started httpserver on port', PORT_NUMBER)
-  server.serve_forever()
+class Proxy:
 
-except KeyboardInterrupt:
-  server.server_close()
-  print('Stopping server')
+    # Quick health check override
+    @myproxy.route('/healthcheck', methods=['GET'])
+    def health(self):
+        return "OK"
+
+    # This is a very dumb proxy, we're only doing GET.
+    @myproxy.route('/<path:req>', methods=['GET'])
+    def proxy(req):
+        # We're only going to google here, so let's just keep it in the proxy settings for now.
+        target = 'https://www.google.com/'
+        return get(f'{target}/search?q={req}').content
+
+    myproxy.run(host='0.0.0.0', port=8080)
+
+
+Proxy()
