@@ -5,7 +5,7 @@ build:
     envTemplate:
       template: "{{.DOCKER_REGISTRY}}/chrissvec/py-proxy:{{.VERSION}}"
   artifacts:
-  - imageName: changeme
+  - imageName: py-proxy
     workspace: .
     docker: {}
   local: {}
