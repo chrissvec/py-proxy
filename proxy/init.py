@@ -6,6 +6,7 @@ from requests import get
 
 
 def spawn_proxy():
+
     myproxy = Flask('__name__')
 
     # Quick health check override
